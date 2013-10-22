@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head><title></title>
-  <link href="style.css" rel="stylesheet"/>
+  <link href="css/style.css" rel="stylesheet"/>
+  <title>Differ</title>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script type="text/javascript" src="javascript/script.js"></script>
 </head>
 <body>
-<% [@left, @right].each do |collection| %>
-    <table cellspacing="0" cellpadding="0">
-      <% 0.upto(@max_rows - 1) do |i| %>
-          <% item = collection[i] %>
-          <% if item.nil? %>
-              <tr>
-                <td>&nbsp;</td>
-                <td><pre class="untracked">&nbsp;</pre></td>
-              </tr>
-          <% else %>
-              <tr>
-                <td><%= item[:old_position] %></td>
-                <td><pre class="<%= item[:type].to_s %>"><%= h(item[:value]) %>&nbsp;</pre></td>
-              </tr>
-          <% end %>
-      <% end %>
-    </table>
+<% [@left, @right].each_with_index do |collection, j| %>
+    <div class="code" id="c<%=j%>">
+      <table cellspacing="0" cellpadding="0">
+        <% 0.upto(@max_rows - 1) do |i| %>
+            <% item = collection[i] %>
+            <% if item.nil? %>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>
+                    <pre class="untracked">&nbsp;</pre>
+                  </td>
+                </tr>
+            <% else %>
+                <tr>
+                  <td><%= j == 0 ? item[:old_position] : item[:new_position] %></td>
+                  <td>
+                    <pre class="<%= item[:type].to_s %>"><%= h(item[:value]) %>&nbsp;</pre>
+                  </td>
+                </tr>
+            <% end %>
+        <% end %>
+      </table>
+    </div>
 <% end %>
 </body>
 </html>

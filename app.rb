@@ -77,11 +77,11 @@ get '/' do
 end
 
 post '/' do
-  # Read old file
-  old_file = File.open('Table.old.php', "r").read.split("\n")
+  # Read old code
+  old_file = params[:old_code].split("\r\n")
 
-  # Read new file
-  new_file = File.open('Table.php', "r").read.split("\n")
+  # Read new code
+  new_file = params[:new_code].split("\r\n")
 
   results = Diff.diff(old_file, new_file)
 
@@ -95,7 +95,7 @@ post '/' do
       @left << r
       @right << r
     elsif r[:type] == :removed
-      if @left.last.nil?
+      if @left.last.nil? && !@left.empty?
         @left[@left.count - 1] = r
         @max_rows -= 1
       else
@@ -103,7 +103,7 @@ post '/' do
         @right << nil
       end
     else
-      if @right.last.nil?
+      if @right.last.nil? && !@right.empty?
         @right[@right.count - 1] = r
         @max_rows -= 1
       else
