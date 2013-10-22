@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title></title>
+  <link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<% [@left, @right].each do |collection| %>
+    <table cellspacing="0" cellpadding="0">
+      <% 0.upto(@max_rows - 1) do |i| %>
+          <% item = collection[i] %>
+          <% if item.nil? %>
+              <tr>
+                <td>&nbsp;</td>
+                <td><pre class="untracked">&nbsp;</pre></td>
+              </tr>
+          <% else %>
+              <tr>
+                <td><%= item[:old_position] %></td>
+                <td><pre class="<%= item[:type].to_s %>"><%= h(item[:value]) %>&nbsp;</pre></td>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+<% end %>
+</body>
+</html>
