@@ -6,13 +6,15 @@ helpers do
   end
 end
 
+
 module Diff
   def self.diff(old_array, new_array)
     lcs = lcs(old_array, new_array)
     diff = Array.new
 
     new_array_index = 0; old_array_index = 0; lcs_array_index = 0
-    while old_array_index < old_array.size and new_array_index < new_array.size and lcs_array_index < lcs.size
+    #while old_array_index < old_array.size and new_array_index < new_array.size and lcs_array_index < lcs.size
+    while !(old_array[old_array_index].nil? and new_array[new_array_index].nil? and lcs[lcs_array_index].nil?)
       if old_array[old_array_index] != lcs[lcs_array_index]
         diff << {:value => old_array[old_array_index], :type => :removed, :old_position => old_array_index+1, :new_position => new_array_index+1}
         old_array_index+=1
@@ -24,7 +26,7 @@ module Diff
         old_array_index+=1; new_array_index+=1; lcs_array_index+=1
       end
     end
-    diff
+   diff
   end
 
   def self.lcs(old, new)
@@ -77,6 +79,8 @@ get '/' do
 end
 
 post '/' do
+  Diff.diff('123','124')
+
   # Read old code
   old_file = params[:old_code].split("\r\n")
 

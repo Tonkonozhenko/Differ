@@ -50,7 +50,7 @@
             </td>
           <% else %>
             <td><%= j == 0 ? item[:old_position] : item[:new_position] %></td>
-            <td><pre><% item[:value].each do |v| %><% if v[:type]==:removed and j==0 %><span class="removed"><%= v[:value] %></span><% end %><% if v[:type]==:added and j==1%><b class="added"><%= v[:value] %></b><% end %><% if v[:type]==:same %><%= v[:value] %><% end %><% end %></pre></td>
+            <td><pre><% item[:value].each do |v| %><% if v[:type]==:removed and j==0 %><span class="removed"><%= h v[:value] %></span><% end %><% if v[:type]==:added and j==1%><b class="added"><%= h v[:value] %></b><% end %><% if v[:type]==:same %><%= h v[:value] %><% end %><% end %></pre></td>
           <% end %>
         </tr>
       <% end %>
