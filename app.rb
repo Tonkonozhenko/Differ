@@ -88,7 +88,7 @@ post '/' do
   @left = []
   @right = []
 
-  @max_rows = results.map {|r| r[:type]==:same || r[:type]==:inserted} .count
+  @max_rows = results.map { |r| r[:type]==:same || r[:type]==:inserted }.count
 
   results.each do |r|
     if r[:type] == :same
@@ -109,6 +109,26 @@ post '/' do
       else
         @left << nil
         @right << r
+      end
+    end
+  end
+
+  0.upto(@max_rows - 1) do |i|
+    left_chunk = @left[i]
+    right_chunk = @right[i]
+    unless left_chunk.nil? || right_chunk.nil?
+      if left_chunk[:type] == :removed and right_chunk[:type] == :added
+        diff = Diff.diff(left_chunk[:value], right_chunk[:value])
+        new_diff = []
+        diff.each do |d|
+          if !new_diff.last.nil? and new_diff.last[:type] == d[:type]
+            new_diff[new_diff.count - 1][:value] += d[:value]
+          else
+            new_diff << d
+          end
+        end
+        @left[i][:value] = new_diff
+        @right[i][:value] = new_diff
       end
     end
   end
