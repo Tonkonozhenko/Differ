@@ -14,7 +14,7 @@ form {
 }
 
 .code {
-    width: 40%;
+    width: 45%;
     overflow: scroll;
     float: left;
     max-height: 100%;
@@ -104,27 +104,88 @@ td pre {
     display: block;
 }
 
-.removed {
+td .removed {
     background: #FCD8D9;
     border: 1px solid #9A2328;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
 
-.same {
+td .same {
     background: #fff;
 }
 
-.added {
+td .added {
     background: #E0FCD0;
     border: 1px solid #1A981F;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
 
-.untracked {
+td .untracked {
     background: #f9f9f9;
     border: 1px solid #e7e7e7;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+}
+
+.map {
+    width: 5%;
+    overflow: scroll;
+    float: left;
+    max-height: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.map:first-child {
+    border-right: 1px solid #eee;
+}
+
+.link {
+    height: 3px;
+}
+
+.link.added {
+    background: #e0fcd0;
+}
+
+.link.untracked {
+    background: #e7e7e7;;
+}
+
+.link.removed {
+    background: #FCD8D9;
+}
+
+.link.modified {
+    background: #f8b673;
+}
+
+tr.selected {
+    background: #000;
+}
+
+tr.selected td {
+    color: #fff;
+}
+
+tr.selected td pre {
+    background: #000;
+}
+
+tr.selected td .removed {
+    color: #FCD8D9;
+    background: #000;
+    /*border: 1px solid #9A2328;*/
+}
+
+tr.selected td .added {
+    color: #E0FCD0;
+    background: #000;
+    /*border: 1px solid #1A981F;*/
+}
+
+tr.selected td .untracked {
+    color: #f9f9f9;
 }

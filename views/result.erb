@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><title></title>
+<head>
   <link href="css/style.css" rel="stylesheet"/>
   <title>Differ</title>
   <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -8,10 +8,35 @@
 </head>
 <body>
 <% [@left, @right].each_with_index do |collection, j| %>
+  <div class="map" id="map<%= j %>">
+    <% 0.upto(@max_rows - 1) do |i| %>
+      <a href="#<%= "tr-#{j}-#{i}"%>">
+        <% if collection[i].nil? %>
+          <div class="link untracked"></div>
+        <% else %>
+          <% if collection[i][:type] == :removed and collection[i][:value].is_a? String %>
+            <div class="link removed"></div>
+          <% end %>
+          <% if collection[i][:type] == :added and collection[i][:value].is_a? String %>
+            <div class="link added"></div>
+          <% end %>
+          <% if (collection[i][:type] == :removed and collection[i][:value].is_a? Array) or (collection[i][:type] == :added and collection[i][:value].is_a? Array) %>
+            <div class="link modified"></div>
+          <% end %>
+          <% if collection[i][:type] == :same %>
+            <div class="link"></div>
+          <% end %>
+        <% end %>
+      </a>
+    <% end %>
+  </div>
+<% end %>
+
+<% [@left, @right].each_with_index do |collection, j| %>
   <div class="code" id="c<%= j %>">
     <table cellspacing="0" cellpadding="0">
       <% 0.upto(@max_rows - 1) do |i| %>
-        <tr>
+        <tr id="tr-<%="#{j}-#{i}"%>">
           <% item = collection[i] %>
           <% if item.nil? %>
             <td>&nbsp;</td>
